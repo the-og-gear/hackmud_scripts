@@ -1,13 +1,13 @@
 function sort_k3ys(k3ys) {
     let k3y_indices = {};
-    for (let i = 2; i < k3ys.length; ++i) {
+    for (let i = 0; i < k3ys.length; ++i) {
         let tokens = k3ys[i].split(" ")[4].split("_");
         if (!k3y_indices[tokens[2]])
             k3y_indices[tokens[2]] = [];
         k3y_indices[tokens[2]].push(i);
     }
     let k3y_keys = Object.keys(k3y_indices).sort();
-    let sorted = [k3ys[0], k3ys[1]];
+    let sorted = [];
     for (let i = 0; i < k3y_keys.length; ++i) {
         for (let j = 0; j < k3y_indices[k3y_keys[i]].length; ++j) {
             sorted.push(k3ys[k3y_indices[k3y_keys[i]][j]]);
@@ -35,6 +35,8 @@ export default(c,a: {u: Scriptor}) => {
             k3ys.push(create_table(u.i, u.rarity, u.name, u.k3y as string));
         }
     }
+    if (!(k3ys.length > 0))
+        return "`DUser has no k3ys! :(`";
     k3ys = sort_k3ys(k3ys);
     k3ys.unshift("Index | k3y", "------+--------------");
     return k3ys;

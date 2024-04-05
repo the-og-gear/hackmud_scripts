@@ -21,7 +21,9 @@ function create_table(index: number, rarity: number, name: string, k3y: string) 
     return index.toString().padStart(3, "0").padStart(5, " ") + " | `" + rarity_colors[rarity] + name + "_" + k3y + "`";
 }
 
-export default(c,a: {u: Scriptor}) => {
+export default(c: Context, a: {u: Scriptor}) => {
+    if (c.calling_script || (c as ScriptorContext).is_scriptor)
+        return "`DYou cannot call this from another script!`";
     if (!a || !a.u)
         return "`DPlease provide` `Nu`:`V#s.``9sys``V.``Lupgrades`";
     if (a.u.name !== "sys.upgrades")
